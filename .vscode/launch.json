@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ms-customer",
+            "request": "launch",
+            "console": "internalConsole",
+            "mainClass": "demo.customer.App",
+            "projectName": "ms-customer"
+        },
+        {
+            "type": "java",
+            "name": "ms-contract",
+            "request": "launch",
+            "console": "internalConsole",
+            "mainClass": "demo.contract.App",
+            "projectName": "ms-contract"
+        }
+    ]
+}

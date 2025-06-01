@@ -1,0 +1,26 @@
+services:  
+
+  db-pg-1:
+    image: postgres:latest
+    container_name: pg-demo-1
+    restart: always
+    environment:
+      POSTGRES_USER: user2
+      POSTGRES_PASSWORD: pass2
+      POSTGRES_DB: db2
+    ports:
+      - "5437:5432"
+    volumes:
+      - /home/dockervol/postgresql/data/db:/var/lib/postgresql/data
+
+  db-mongo-1:
+    image: mongo
+    container_name: mongo-demo-1
+    environment:
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - '27017:27017'
+    volumes:
+      - /home/dockervol/mongodata/data/db:/data/db
+
