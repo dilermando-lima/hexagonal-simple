@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import demo.customer.application.exception.InvalidRequestException;
 import demo.customer.application.gateway.ClienteRepositoryGateway;
 import demo.customer.application.model.ClientModel;
-import demo.customer.application.service.GetClientByIdService.GetByIdOutput;
+import demo.customer.application.service.GetClientByIdService.GetClientByIdOutput;
 
 
 public class UpdateClientByIdService {
@@ -18,21 +18,21 @@ public class UpdateClientByIdService {
         this.getByIdService = getByIdService;
     }
     
-    public record UpdateByIdInput(
+    public record UpdateClientByIdInput(
         String name,
         LocalDate dateOfBirth,
         String phone,
         String address
     ){}
 
-    public void update(String id, UpdateByIdInput input){
+    public void update(String id, UpdateClientByIdInput input){
         validateInput(input);
         var client = getByIdService.getById(id);
         var clientToUpdate = inputToModel(input, client);
         repositoy.update(clientToUpdate);
     }
 
-    private void validateInput(UpdateByIdInput input){
+    private void validateInput(UpdateClientByIdInput input){
 
         if( input == null ) throw new InvalidRequestException("request cannot be empty");
         if( input.name == null || input.name.isBlank()) throw new InvalidRequestException("name is required");
@@ -44,7 +44,7 @@ public class UpdateClientByIdService {
 
     }
 
-    private ClientModel inputToModel(UpdateByIdInput input, GetByIdOutput client){
+    private ClientModel inputToModel(UpdateClientByIdInput input, GetClientByIdOutput client){
         var clientModel = new ClientModel();
         clientModel.setId(client.id());
         clientModel.setCreatedAt(client.createdAt());

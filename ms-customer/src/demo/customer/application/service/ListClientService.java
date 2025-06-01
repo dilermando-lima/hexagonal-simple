@@ -14,13 +14,13 @@ public class ListClientService {
         this.repositoy = repositoy;
     }
     
-    public record OutputItem(
+    public record ClientOutputItem(
         String id,
         String document,
         String name
     ){}
 
-    public List<OutputItem> list(String nameLK, String addressLK, String phoneEQ, String documentEQ){
+    public List<ClientOutputItem> list(String nameLK, String addressLK, String phoneEQ, String documentEQ){
         // .... ADD HERE PAGINATION AND PROJECTION STRATEGIES
         return repositoy
                 .list(nameLK, addressLK, phoneEQ, documentEQ)
@@ -29,8 +29,8 @@ public class ListClientService {
                 .toList();
     }
 
-    private OutputItem modelToOutputItem(ClientModel client){
-        return new OutputItem(
+    private ClientOutputItem modelToOutputItem(ClientModel client){
+        return new ClientOutputItem(
             client.getId(), 
             client.getDocument(), 
             client.getName()

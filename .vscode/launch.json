@@ -16,5 +16,10 @@
             "mainClass": "demo.contract.App",
             "projectName": "ms-contract"
         }
+    ],"compounds": [
+        {
+            "name": "all",
+            "configurations": ["ms-contract","ms-customer"]
+        }
     ]
 }

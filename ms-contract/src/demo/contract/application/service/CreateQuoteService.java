@@ -32,17 +32,17 @@ public class CreateQuoteService {
         this.riskAnalisisServiceGateway = riskAnalisisServiceGateway;
     }
 
-    public record CreateOutput(String newId){}
+    public record CreateQuoteOutput(String newId){}
 
-    public record CreateInput(String clientId, String policyId){}
+    public record CreateQuoteInput(String clientId, String policyId){}
 
-    public CreateOutput create(CreateInput input){
+    public CreateQuoteOutput create(CreateQuoteInput input){
         validateInput(input);
         var client = getClient(input);
         var policy = getPolicy(input);
         validateRiskAnalisis(client);
         var quote = quoteRepositoryGateway.insertNew(inputToModel(client, policy));
-        return new CreateOutput(quote.getId());
+        return new CreateQuoteOutput(quote.getId());
     }
 
     private QuoteModel inputToModel(ClientModel client, PolicyModel policy) {
@@ -61,13 +61,13 @@ public class CreateQuoteService {
         }
     }
 
-    private PolicyModel getPolicy(CreateInput input) {
+    private PolicyModel getPolicy(CreateQuoteInput input) {
         return policyRepositoryGateway
             .getById(input.policyId)
             .orElseThrow(() -> new InvalidRequestException("Policy id '%s' is invalid".formatted(input.policyId)));
     }
 
-    private ClientModel getClient(CreateInput input) {
+    private ClientModel getClient(CreateQuoteInput input) {
         return clientServiceGateway
             .getById(input.clientId)
             .map(output -> {
@@ -83,7 +83,7 @@ public class CreateQuoteService {
             .orElseThrow(() -> new InvalidRequestException("Client id '%s' is invalid".formatted(input.clientId)));
     }
 
-    private void validateInput(CreateInput input) {
+    private void validateInput(CreateQuoteInput input) {
         if(input == null) throw new InvalidRequestException("request is empty");
         if(input.clientId == null || input.clientId.isBlank()) throw new InvalidRequestException("clientId is required");
         if(input.policyId == null || input.policyId.isBlank()) throw new InvalidRequestException("policyId is required");

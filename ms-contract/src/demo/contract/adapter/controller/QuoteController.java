@@ -30,12 +30,12 @@ public class QuoteController {
         responses = {
             @ApiResponse(
                 responseCode = "201", 
-                content = {@Content(schema = @Schema(implementation = CreateQuoteService.CreateOutput.class))}
+                content = {@Content(schema = @Schema(implementation = CreateQuoteService.CreateQuoteOutput.class))}
             )
         }
     )
     @PostMapping
-    public ResponseEntity<CreateQuoteService.CreateOutput> create(@RequestBody(required = false) CreateQuoteService.CreateInput input) {
+    public ResponseEntity<CreateQuoteService.CreateQuoteOutput> create(@RequestBody(required = false) CreateQuoteService.CreateQuoteInput input) {
         return ResponseEntity.status(HttpStatus.CREATED).body(createQuoteService.create(input));
     }
 

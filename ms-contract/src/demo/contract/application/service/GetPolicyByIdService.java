@@ -14,9 +14,9 @@ public class GetPolicyByIdService {
         this.policyRepositoryGateway = policyRepositoryGateway;
     }
 
-    public class GetByIdOutput extends PolicyModel{}
+    public class GetPolicyByIdOutput extends PolicyModel{}
 
-    public GetByIdOutput getById(String id){
+    public GetPolicyByIdOutput getById(String id){
         validateId(id);
         return policyRepositoryGateway
                 .getById(id)
@@ -24,8 +24,8 @@ public class GetPolicyByIdService {
                 .orElseThrow(() -> new ResourceNotFoundException("id '%s' not found".formatted(id)));
     }
 
-    private GetByIdOutput modelToOutput(PolicyModel model) {
-        var output = new GetByIdOutput();
+    private GetPolicyByIdOutput modelToOutput(PolicyModel model) {
+        var output = new GetPolicyByIdOutput();
         BeanUtils.copyProperties(model, output);
         return output;
     }

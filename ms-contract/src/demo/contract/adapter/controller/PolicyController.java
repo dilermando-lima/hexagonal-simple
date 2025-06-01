@@ -35,12 +35,12 @@ public class PolicyController {
         responses = {
             @ApiResponse(
                 responseCode = "200", 
-                content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ListPolicyService.OutputItem.class)))}
+                content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ListPolicyService.PolicyOutputItem.class)))}
             )
         }
     )
     @GetMapping
-    public ResponseEntity<List<ListPolicyService.OutputItem>> listAll() {
+    public ResponseEntity<List<ListPolicyService.PolicyOutputItem>> listAll() {
         return ResponseEntity.ok(listPolicyService.listAll());
     }
 
@@ -49,12 +49,12 @@ public class PolicyController {
         responses = {
                 @ApiResponse(
                     responseCode = "200", 
-                    content = {@Content(schema = @Schema(implementation = GetPolicyByIdService.GetByIdOutput.class))}
+                    content = {@Content(schema = @Schema(implementation = GetPolicyByIdService.GetPolicyByIdOutput.class))}
                 )
         }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<GetPolicyByIdService.GetByIdOutput> getById(@PathVariable(name = "id") String id) {
+    public ResponseEntity<GetPolicyByIdService.GetPolicyByIdOutput> getById(@PathVariable(name = "id") String id) {
         return ResponseEntity.ok(getPolicyByIdService.getById(id));
     }
 

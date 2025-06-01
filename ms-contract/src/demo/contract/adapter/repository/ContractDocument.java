@@ -4,15 +4,17 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import demo.contract.application.model.QuoteModel;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @Document(collection = "CONTRACT")
 public class ContractDocument {
 
     @Id
     private String id;
-    private QuoteModel quote;
+
+    @DocumentReference(lazy = true)
+    private QuoteDocument quote;
+
     private LocalDateTime startedAt;
     private LocalDateTime expiresIn;
     
@@ -22,10 +24,10 @@ public class ContractDocument {
     public void setId(String id) {
         this.id = id;
     }
-    public QuoteModel getQuote() {
+    public QuoteDocument getQuote() {
         return quote;
     }
-    public void setQuote(QuoteModel quote) {
+    public void setQuote(QuoteDocument quote) {
         this.quote = quote;
     }
     public LocalDateTime getStartedAt() {
@@ -40,8 +42,7 @@ public class ContractDocument {
     public void setExpiresIn(LocalDateTime expiresIn) {
         this.expiresIn = expiresIn;
     }
-
-  
+    
     
     
 }

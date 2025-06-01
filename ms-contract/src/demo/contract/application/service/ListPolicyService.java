@@ -13,17 +13,17 @@ public class ListPolicyService {
         this.policyRepositoryGateway = policyRepositoryGateway;
     }
 
-    public record OutputItem(
+    public record PolicyOutputItem(
         String id,
         String name,
         String description
     ){}
 
-    public List<OutputItem> listAll(){
+    public List<PolicyOutputItem> listAll(){
         return policyRepositoryGateway.listAll().stream().map(this::modelToOutput).toList();
     }
 
-    private OutputItem modelToOutput(PolicyModel model){
-        return new OutputItem(model.getId(), model.getName(), model.getDescription());
+    private PolicyOutputItem modelToOutput(PolicyModel model){
+        return new PolicyOutputItem(model.getId(), model.getName(), model.getDescription());
     }
 }

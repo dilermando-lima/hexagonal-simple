@@ -17,7 +17,7 @@ public class GetClientByIdService {
         this.repositoy = repositoy;
     }
 
-    public record GetByIdOutput(
+    public record GetClientByIdOutput(
         String id,
         String document,
         String name,
@@ -28,7 +28,7 @@ public class GetClientByIdService {
     ){}
 
     
-    public GetByIdOutput getById(String id){
+    public GetClientByIdOutput getById(String id){
         validateId(id);
         return repositoy
                 .getById(id)
@@ -40,8 +40,8 @@ public class GetClientByIdService {
         if( id == null || id.isBlank() ) throw new ResourceNotFoundException("id is required");
     }
 
-    private GetByIdOutput modelToOutput(ClientModel client){
-        return new GetByIdOutput(
+    private GetClientByIdOutput modelToOutput(ClientModel client){
+        return new GetClientByIdOutput(
             client.getId(), 
             client.getDocument(), 
             client.getName(), 

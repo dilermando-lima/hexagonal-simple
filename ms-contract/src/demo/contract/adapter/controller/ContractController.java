@@ -30,12 +30,12 @@ public class ContractController {
         responses = {
             @ApiResponse(
                 responseCode = "201", 
-                content = {@Content(schema = @Schema(implementation = CreateContractService.CreateOutput.class))}
+                content = {@Content(schema = @Schema(implementation = CreateContractService.CreateContractOutput.class))}
             )
         }
     )
     @PostMapping
-    public ResponseEntity<CreateContractService.CreateOutput> create(@RequestBody(required = false) CreateContractService.CreateInput input) {
+    public ResponseEntity<CreateContractService.CreateContractOutput> create(@RequestBody(required = false) CreateContractService.CreateContractInput input) {
         return ResponseEntity.status(HttpStatus.CREATED).body(createContractService.create(input));
     }
     

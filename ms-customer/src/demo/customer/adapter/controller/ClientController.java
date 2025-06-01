@@ -59,12 +59,12 @@ public class ClientController {
         responses = {
             @ApiResponse(
                 responseCode = "201", 
-                content = {@Content(schema = @Schema(implementation = CreateClientService.CreateOutput.class))}
+                content = {@Content(schema = @Schema(implementation = CreateClientService.CreateClientOutput.class))}
             )
         }
     )
     @PostMapping
-    public ResponseEntity<CreateClientService.CreateOutput> create(@RequestBody(required = false) CreateClientService.CreateInput input) {
+    public ResponseEntity<CreateClientService.CreateClientOutput> create(@RequestBody(required = false) CreateClientService.CreateClientInput input) {
         return ResponseEntity.status(HttpStatus.CREATED).body(createService.insert(input));
     }
 
@@ -80,12 +80,12 @@ public class ClientController {
         responses = {
             @ApiResponse(
                 responseCode = "200", 
-                content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ListClientService.OutputItem.class)))}
+                content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ListClientService.ClientOutputItem.class)))}
             )
         }
     )
     @GetMapping
-    public ResponseEntity<List<ListClientService.OutputItem>> list(
+    public ResponseEntity<List<ListClientService.ClientOutputItem>> list(
         @RequestParam(required = false) String nameLK,
         @RequestParam(required = false) String addressLK,
         @RequestParam(required = false) String phoneEQ,
@@ -100,7 +100,7 @@ public class ClientController {
         responses = {@ApiResponse(responseCode = "204")}
     )
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateById(@PathVariable(name = "id") String id, @RequestBody(required = false) UpdateClientByIdService.UpdateByIdInput input) {
+    public ResponseEntity<Void> updateById(@PathVariable(name = "id") String id, @RequestBody(required = false) UpdateClientByIdService.UpdateClientByIdInput input) {
         updateByIdService.update(id, input);
         return ResponseEntity.noContent().build();
     }
@@ -110,12 +110,12 @@ public class ClientController {
         responses = {
                 @ApiResponse(
                     responseCode = "200", 
-                    content = {@Content(schema = @Schema(implementation = GetClientByIdService.GetByIdOutput.class))}
+                    content = {@Content(schema = @Schema(implementation = GetClientByIdService.GetClientByIdOutput.class))}
                 )
         }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<GetClientByIdService.GetByIdOutput> getById(@PathVariable(name = "id") String id) {
+    public ResponseEntity<GetClientByIdService.GetClientByIdOutput> getById(@PathVariable(name = "id") String id) {
         return ResponseEntity.ok(getByIdService.getById(id));
     }
 

@@ -28,16 +28,28 @@ public class CreateContractService {
         this.riskAnalisisServiceGateway = riskAnalisisServiceGateway;
     }
 
-    public record CreateOutput(String newId){}
+    public record CreateContractOutput(String newId){}
 
-    public record CreateInput(String quoteId){}
+    public record CreateContractInput(String quoteId){}
 
-    public CreateOutput create(CreateInput input){
+    public CreateContractOutput create(CreateContractInput input){
         validateInput(input);
         var quote = getQuote(input);
+        validateAlreadyExistsByQuoteId(input);
+        validateQuoteExpiration(quote);
         validateRiskAnalisis(quote.getClient());
         var contract = contractRepositoryGateway.insertNew(inputToModel(quote));
-        return new CreateOutput(contract.getId());
+        return new CreateContractOutput(contract.getId());
+    }
+
+    private void validateQuoteExpiration(QuoteModel quote) {
+        if( quote.getExpiresIn().isAfter(LocalDateTime.now()))
+            throw new InvalidRequestException("Quote id '%s' is expired");
+    }
+
+    private void validateAlreadyExistsByQuoteId(CreateContractInput input) {
+        if(contractRepositoryGateway.existsByQuoteId(input.quoteId))
+            throw new InvalidRequestException("Quote id '%s' is already added into specific contract");
     }
 
     private ContractModel inputToModel(QuoteModel quote) {
@@ -55,13 +67,13 @@ public class CreateContractService {
         }
     }
 
-    private QuoteModel getQuote(CreateInput input) {
+    private QuoteModel getQuote(CreateContractInput input) {
         return quoteRepositoryGateway
             .getById(input.quoteId)
             .orElseThrow(() -> new InvalidRequestException("Quote id '%s' is invalid".formatted(input.quoteId)));
     }
 
-    private void validateInput(CreateInput input) {
+    private void validateInput(CreateContractInput input) {
         if(input == null) throw new InvalidRequestException("request is empty");
         if(input.quoteId == null || input.quoteId.isBlank()) throw new InvalidRequestException("quoteId is required");
     }

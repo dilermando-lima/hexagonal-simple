@@ -16,7 +16,7 @@ public class CreateClientService {
         this.repositoy = repositoy;
     }
 
-    public record CreateInput(
+    public record CreateClientInput(
         String document,
         String name,
         LocalDate dateOfBirth,
@@ -24,18 +24,18 @@ public class CreateClientService {
         String address
     ){}
 
-    public record CreateOutput(
+    public record CreateClientOutput(
         String newId
     ){}
     
-    public CreateOutput insert(CreateInput input){
+    public CreateClientOutput insert(CreateClientInput input){
         validateInput(input);
         var client = inputToModel(input);
         validateDocumentAlreadyExists(client);
         return modelToOutput(repositoy.insert(client));
     }
 
-    private ClientModel inputToModel(CreateInput input){
+    private ClientModel inputToModel(CreateClientInput input){
         var clientModel = new ClientModel();
         clientModel.setId(null);
         clientModel.setCreatedAt(LocalDateTime.now());
@@ -47,8 +47,8 @@ public class CreateClientService {
         return clientModel;
     }
 
-    private CreateOutput modelToOutput(ClientModel client){
-        return new CreateOutput(client.getId());
+    private CreateClientOutput modelToOutput(ClientModel client){
+        return new CreateClientOutput(client.getId());
     }
 
     private void validateDocumentAlreadyExists(ClientModel client){
@@ -59,7 +59,7 @@ public class CreateClientService {
             );
     }
 
-    private void validateInput(CreateInput input){
+    private void validateInput(CreateClientInput input){
 
         if( input == null ) throw new InvalidRequestException("input cannot be empty");
         if( input.name == null || input.name.isBlank()) throw new InvalidRequestException("name is required");

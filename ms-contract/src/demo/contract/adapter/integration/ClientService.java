@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
 
 import demo.contract.application.exception.InternalErrorException;
 import demo.contract.application.exception.InvalidRequestException;
@@ -25,7 +26,7 @@ public class ClientService implements ClientServiceGateway {
 
     private final String baseUrlClienteService;
 
-    public ClientService(@Value("integration.client.base-url") String baseUrlClienteService) {
+    public ClientService(@Value("${integration.client-service.base-url}") String baseUrlClienteService) {
         this.baseUrlClienteService = baseUrlClienteService;
     }
 
@@ -54,6 +55,9 @@ public class ClientService implements ClientServiceGateway {
             );
         }catch(ResourceNotFoundException ex){
             return Optional.empty();
+        }catch(RestClientException ex){
+            log.error(ex.getMessage(), ex);
+            throw new InternalErrorException("Internal error when requesting client service");
         }
     }
     
