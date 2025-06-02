@@ -2,11 +2,11 @@
     "configurations": [
         {
             "type": "java",
-            "name": "ms-customer",
+            "name": "ms-client",
             "request": "launch",
             "console": "internalConsole",
-            "mainClass": "demo.customer.App",
-            "projectName": "ms-customer"
+            "mainClass": "demo.client.App",
+            "projectName": "ms-client"
         },
         {
             "type": "java",
@@ -19,7 +19,7 @@
     ],"compounds": [
         {
             "name": "all",
-            "configurations": ["ms-contract","ms-customer"]
+            "configurations": ["ms-contract","ms-client"]
         }
     ]
 }

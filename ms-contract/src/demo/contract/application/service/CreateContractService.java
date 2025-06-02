@@ -12,7 +12,7 @@ import demo.contract.application.model.QuoteModel;
 
 public class CreateContractService {
 
-    private static final int LIMIT_EXPIRATION_CONTRACT_IN_DAYS = 365; // .... MOVE TO DYNAMIC CONFIGURATION STRATEGY OR SOME BUSINESS RULE
+    public static final int LIMIT_EXPIRATION_CONTRACT_IN_DAYS = 365; // .... MOVE TO DYNAMIC CONFIGURATION STRATEGY OR SOME BUSINESS RULE
 
     private final ContractRepositoryGateway contractRepositoryGateway;
     private final QuoteRepositoryGateway quoteRepositoryGateway;
@@ -43,13 +43,13 @@ public class CreateContractService {
     }
 
     private void validateQuoteExpiration(QuoteModel quote) {
-        if( quote.getExpiresIn().isAfter(LocalDateTime.now()))
-            throw new InvalidRequestException("Quote id '%s' is expired");
+        if( quote.getExpiresIn().isBefore(LocalDateTime.now()))
+            throw new InvalidRequestException("Quote id '%s' is expired".formatted(quote.getId()));
     }
 
     private void validateAlreadyExistsByQuoteId(CreateContractInput input) {
         if(contractRepositoryGateway.existsByQuoteId(input.quoteId))
-            throw new InvalidRequestException("Quote id '%s' is already added into specific contract");
+            throw new InvalidRequestException("Quote id '%s' is already added into specific contract".formatted(input.quoteId));
     }
 
     private ContractModel inputToModel(QuoteModel quote) {

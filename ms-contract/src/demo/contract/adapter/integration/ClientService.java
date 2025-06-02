@@ -24,18 +24,18 @@ public class ClientService implements ClientServiceGateway {
 
      private static final Logger log = LoggerFactory.getLogger(ClientService.class);
 
-    private final String baseUrlClienteService;
+    private final String baseUrlClientService;
 
-    public ClientService(@Value("${integration.client-service.base-url}") String baseUrlClienteService) {
-        this.baseUrlClienteService = baseUrlClienteService;
+    public ClientService(@Value("${integration.client-service.base-url}") String baseUrlClientService) {
+        this.baseUrlClientService = baseUrlClientService;
     }
 
     @Override
-    public Optional<GetClienteByIdOutput> getById(String id) {
+    public Optional<GetClientByIdOutput> getById(String id) {
         try{
             return Optional.ofNullable(
                 RestClient
-                    .create(baseUrlClienteService)
+                    .create(baseUrlClientService)
                     .method(HttpMethod.GET)
                     .uri("/clients/{id}", id)
                     .retrieve()
@@ -51,7 +51,7 @@ public class ClientService implements ClientServiceGateway {
                             log.error("{} : response = {}", message, body);
                             throw new InternalErrorException(message);
                         })
-                    .body(GetClienteByIdOutput.class)
+                    .body(GetClientByIdOutput.class)
             );
         }catch(ResourceNotFoundException ex){
             return Optional.empty();

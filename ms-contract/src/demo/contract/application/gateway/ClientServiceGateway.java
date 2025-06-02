@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface ClientServiceGateway {
 
-    public record GetClienteByIdOutput(
+    public record GetClientByIdOutput(
         String id,
         String document,
         String name,
@@ -16,6 +16,6 @@ public interface ClientServiceGateway {
         LocalDateTime createdAt
     ){}
 
-    public Optional<GetClienteByIdOutput> getById(String id);
+    public Optional<GetClientByIdOutput> getById(String id);
 
 }

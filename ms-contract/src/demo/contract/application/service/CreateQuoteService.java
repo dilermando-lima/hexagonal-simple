@@ -13,7 +13,7 @@ import demo.contract.application.model.QuoteModel;
 
 public class CreateQuoteService {
 
-    private static final int LIMIT_EXPIRATION_QUOTE_IN_DAYS = 15; // .... MOVE TO DYNAMIC CONFIGURATION STRATEGY OR SOME BUSINESS RULE
+    public static final int LIMIT_EXPIRATION_QUOTE_IN_DAYS = 15; // .... MOVE TO DYNAMIC CONFIGURATION STRATEGY OR SOME BUSINESS RULE
 
     private final PolicyRepositoryGateway policyRepositoryGateway;
     private final QuoteRepositoryGateway quoteRepositoryGateway;
